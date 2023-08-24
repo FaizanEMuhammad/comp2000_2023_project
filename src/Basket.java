@@ -4,6 +4,9 @@ public class Basket implements BasketInterface {
     ArrayList<ItemInterface> items;
     ArrayList<Integer> quantities;
 
+    private static int itemNotFound = -1;
+    private static int setItemQuantity = 1;
+
     public Basket() {
         items = new ArrayList<>();
         quantities = new ArrayList<>();
