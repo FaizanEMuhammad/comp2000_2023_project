@@ -18,7 +18,7 @@ public class Basket implements BasketInterface {
                 return i;
             }
         }
-        return -1;
+        return itemNotFound;
     }
 
     public ArrayList<CartTableRow> getRowData() {
@@ -34,18 +34,18 @@ public class Basket implements BasketInterface {
     @Override
     public void setItemQuantity(String itemName, int qty) {
         int index = itemIndex(itemName);
-        if (index != -1) {
+        if (index != itemNotFound) {
             quantities.set(index, qty);
         }
     }
 
     public void add(ItemInterface item) {
         int index = itemIndex(item.getInventoryTableRow().getColumnOne());
-        if (index != -1) {
+        if (index != itemNotFound) {
             quantities.set(index, quantities.get(index) + 1);
         } else {
             items.add(item);
-            quantities.add(1);
+            quantities.add(setItemQuantity);
         }
     }
 
@@ -53,7 +53,7 @@ public class Basket implements BasketInterface {
     public void remove(String itemName) {
         int index = itemIndex(itemName);
 
-        if (index != -1) {
+        if (index != itemNotFound) {
             items.remove(index);
             quantities.remove(index);
         }
