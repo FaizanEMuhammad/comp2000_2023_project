@@ -1,24 +1,37 @@
-public class Seller extends Person{
+public class Seller {
+    private String name;
+    private Inventory inventory;
 
-    public Seller(String storeName, Inventory startingInventory) {
-        super(storeName, startingInventory);
+    public Seller(String PersonName, Inventory startingInventory) {
+        name = PersonName;
+        inventory = startingInventory;
     }
 
-    /**
-     * Removes and returns an item from the held Inventory that matches
-     * the `itemName` parameter.
-     * @param itemName
-     */
+    public void buy(ItemInterface item) {
+        inventory.addOne(item);
+    }
+
+    public ItemInterface sell(String itemName) {
+        ItemInterface result = removeItem(itemName);
+        if (result != null) {
+            return result;
+        }
+        return null;
+    }
+
+    public void addItem(ItemInterface item) {
+        inventory.addOne(item);
+    }
+
     public ItemInterface removeItem(String itemName) {
-        return super.getInventory().removeOne(itemName);
+        return inventory.removeOne(itemName);
     }
-    
+
     public Inventory getInventory() {
-        return super.getInventory();
+        return inventory;
     }
 
     public String getName() {
-        return super.getName();
+        return name;
     }
-    
 }

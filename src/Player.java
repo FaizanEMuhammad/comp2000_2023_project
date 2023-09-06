@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Player extends Person{
+public class Player extends Seller{
     private double money;
     private Basket shoppingBasket;
     private Inventory viewOfStoreInventory;
@@ -41,7 +41,7 @@ public class Player extends Person{
         return null;
     }
     public Basket getShoppingBasket() {
-        return shoppingBasket;
+        return shoppingBasket; 
     }
 
     public void addToShoppingBasket(ItemInterface itemDataRow) {
