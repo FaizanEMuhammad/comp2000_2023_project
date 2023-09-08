@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class Inventory {
     protected ArrayList<ItemInterface> stock;
@@ -41,13 +42,13 @@ public class Inventory {
      * @param itemName
      * @return An Item matching the `itemName`
      */
-    public ItemInterface removeOne(String itemName) {   
+    public Optional<ItemInterface> removeOne(String itemName) {   
         int removeFromIdx = indexOfItemByName(itemName);
         if (removeFromIdx == -1) {
-            return null;
+            Optional.empty();
         }
 
-        return stock.remove((int) removeFromIdx);
+        return Optional.of(stock.remove((int) removeFromIdx));
     }
 
     /**

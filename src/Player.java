@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class Player extends Seller{
     private double money;
@@ -32,13 +33,14 @@ public class Player extends Seller{
      * @param itemName
      */
     @Override
-    public ItemInterface sell(String itemName) {
-        ItemInterface i = removeItem(itemName);
-        if (i != null) {
-            money += Double.valueOf(i.getInventoryTableRow().getColumnThree().trim());
+    public Optional<ItemInterface> sell(String itemName) {
+        Optional<ItemInterface> i = removeItem(itemName);
+        if (i.isPresent()) {
+            ItemInterface item = i.get();
+            money += Double.valueOf(item.getInventoryTableRow().getColumnThree().trim());
             return i;
         }
-        return null;
+        return Optional.empty();
     }
     public Basket getShoppingBasket() {
         return shoppingBasket; 
