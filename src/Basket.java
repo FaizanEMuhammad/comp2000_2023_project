@@ -2,20 +2,18 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 public class Basket implements BasketInterface {
-    ArrayList<ItemInterface> items;
-    ArrayList<Integer> quantities;
+    private ArrayList<BasketItem> items;
 
     private static int itemNotFound = -1;
     private static int setItemQuantity = 1;
 
     public Basket() {
         items = new ArrayList<>();
-        quantities = new ArrayList<>();
     }
 
     public int itemIndex(String itemName) {
         for (int i = 0; i < items.size(); i++) {
-            if (items.get(i).getInventoryTableRow().getColumnOne().equalsIgnoreCase(itemName)) {
+            if (items.get(i).getItem().getInventoryTableRow().getColumnOne().equalsIgnoreCase(itemName)) {
                 return i;
             }
         }
@@ -26,7 +24,7 @@ public class Basket implements BasketInterface {
         ArrayList<CartTableRow> data = new ArrayList<>();
 
         for (int i = 0; i < items.size(); i++) {
-            data.add(items.get(i).getCartRow(quantities.get(i) + ""));
+            data.add(items.get(i).getItem().getCartRow(items.get(i).getQuantity() + ""));
         }
 
         return data;
@@ -36,17 +34,16 @@ public class Basket implements BasketInterface {
     public void setItemQuantity(String itemName, int qty) {
         int index = itemIndex(itemName);
         if (index != itemNotFound) {
-            quantities.set(index, qty);
+            items.get(index).setQuantity(qty);
         }
     }
 
     public void add(ItemInterface item) {
         int index = itemIndex(item.getInventoryTableRow().getColumnOne());
         if (index != itemNotFound) {
-            quantities.set(index, quantities.get(index) + 1);
+            items.get(index).setQuantity(items.get(index).getQuantity() + setItemQuantity);
         } else {
-            items.add(item);
-            quantities.add(setItemQuantity);
+            items.add(new BasketItem(item, setItemQuantity));
         }
     }
 
@@ -56,7 +53,6 @@ public class Basket implements BasketInterface {
 
         if (index != itemNotFound) {
             items.remove(index);
-            quantities.remove(index);
         }
     }
 
@@ -66,8 +62,8 @@ public class Basket implements BasketInterface {
         boolean rollback = false;
         // Remove/sell items from the `from` parameter
         for (int i = 0; i < items.size() && !rollback; i++) {
-            for (int q = 0; q < quantities.get(i); q++) {
-                Optional<ItemInterface> saleItem = from.sell(items.get(i).getInventoryTableRow().getColumnOne());
+            for (int q = 0; q < items.get(i).getQuantity(); q++) {
+                Optional<ItemInterface> saleItem = from.sell(items.get(i).getItem().getInventoryTableRow().getColumnOne());
                 if (!saleItem.isPresent()) {
                     rollback = true;
                     break;  // Trigger transaction rollback
@@ -93,8 +89,8 @@ public class Basket implements BasketInterface {
         boolean rollback = false;
         // Remove/sell items from the `from` parameter
         for (int i = 0; i < items.size() && !rollback; i++) {
-            for (int q = 0; q < quantities.get(i); q++) {
-                Optional<ItemInterface> saleItem = from.sell(items.get(i).getInventoryTableRow().getColumnOne());
+            for (int q = 0; q <  items.get(i).getQuantity(); q++) {
+                Optional<ItemInterface> saleItem = from.sell(items.get(i).getItem().getInventoryTableRow().getColumnOne());
                 if (!saleItem.isPresent()) {
                     rollback = true;
                     break;  // Trigger transaction rollback

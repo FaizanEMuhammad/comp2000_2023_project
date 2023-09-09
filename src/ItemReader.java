@@ -17,17 +17,17 @@ public class ItemReader {
         // NOTE: expiry will be an empty String if the item does not expire
         
         // You may modify the below
-        
         int expiration = -1;
         if (!expiry.isEmpty()) {
             expiration = Integer.valueOf(expiry);
         }
+        Item item = new Item(name, description, value, expiration);
         if (name.equals("Tomato")) {
-            return new Tomato(expiration);
+            return new Tomato(item);
         } else if (name.equals("Rock")) {
-            return new Rock(expiration);
+            return new Rock(item);
         } else if (name.equals("Wand")) {
-            return new Wand(expiration);
+            return new Wand(item);
         } else {
             System.err.println("Bad Item read in ItemReader");
             System.exit(0);

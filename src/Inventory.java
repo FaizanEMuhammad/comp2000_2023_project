@@ -3,6 +3,7 @@ import java.util.Optional;
 
 public class Inventory {
     protected ArrayList<ItemInterface> stock;
+    private static int itemNotFound = -1;
 
     public Inventory() {
         stock = new ArrayList<>();
@@ -44,7 +45,7 @@ public class Inventory {
      */
     public Optional<ItemInterface> removeOne(String itemName) {   
         int removeFromIdx = indexOfItemByName(itemName);
-        if (removeFromIdx == -1) {
+        if (removeFromIdx == itemNotFound) {
             Optional.empty();
         }
 
@@ -63,7 +64,7 @@ public class Inventory {
                 return i;
             }
         }
-        return -1;
+        return itemNotFound;
     }
 
 }

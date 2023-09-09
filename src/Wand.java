@@ -1,13 +1,13 @@
 public class Wand implements ItemInterface {
-    int expiry;
+    private Item item;
 
-    public Wand(int expiry) {
-        this.expiry = expiry;
+    public Wand(Item item) {
+        this.item = item;
     }
 
     @Override
     public InventoryTableRow getInventoryTableRow() {
-        return new InventoryTableRow("Wand", "A magic wand!", "100.0", expiry + "");
+        return new InventoryTableRow("Wand", "A magic wand!", "100.0", String.valueOf(item.getExpiry()) + "");
     }
 
     @Override

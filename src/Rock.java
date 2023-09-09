@@ -1,13 +1,14 @@
-public class Rock implements ItemInterface {
-    int expiry;
+public class Rock implements ItemInterface{
 
-    public Rock(int expiry) {
-        this.expiry = expiry;
+    private Item item;
+
+    public Rock(Item item) {
+        this.item = item;
     }
 
     @Override
     public InventoryTableRow getInventoryTableRow() {
-        return new InventoryTableRow("Rock", "Rock :D", "5.0", expiry + "");
+        return new InventoryTableRow("Rock", "Rock :D", "5.0", String.valueOf(item.getExpiry())+ "");
     }
 
     @Override
